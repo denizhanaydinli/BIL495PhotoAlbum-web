@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-import SimpleAppBar from "../components/app_bar";
 import { AlbumPage } from "../components/album";
 import { MyAppBar } from "../components/MyAppBar";
 import { AlbumList } from "../components/albums";
