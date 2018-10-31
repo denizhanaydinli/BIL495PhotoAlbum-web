@@ -216,7 +216,7 @@ class PrimarySearchAppBar extends React.Component {
                 </AppBar>
                 {renderMenu}
                 {renderMobileMenu}
-                <Album />
+                {this.props.children}
             </div>
         );
     }
@@ -226,4 +226,6 @@ PrimarySearchAppBar.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(PrimarySearchAppBar);
+const MyAppBar = withStyles(styles)(PrimarySearchAppBar);
+
+export { MyAppBar };

@@ -158,4 +158,6 @@ Album.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Album);
+const AlbumList = withStyles(styles)(Album);
+
+export { AlbumList };
