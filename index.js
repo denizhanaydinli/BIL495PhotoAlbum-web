@@ -1,7 +1,7 @@
 import * as React from "react";
 import ReactDOM from "react-dom";
+import { AppRouter } from "./src/router/app_router";
 
-import SimpleAppBar from "./src/components/app_bar";
 
 function greeter(person) {
   return "Hello, " + person;
@@ -11,9 +11,10 @@ function greeter(person) {
 ReactDOM.render(
   <div>
     {/* <h1>Hello, world! {greeter("user")} </h1> */}
-    <SimpleAppBar>
+    {/* <SimpleAppBar>
 
-    </SimpleAppBar>
+    </SimpleAppBar> */}
+    <AppRouter />
   </div>,
   document.getElementById('root')
 );
