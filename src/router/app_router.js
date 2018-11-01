@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { AlbumPage } from "../components/album";
 import { MyAppBar } from "../components/MyAppBar";
 import { AlbumList } from "../components/albums";
+import AccountSettings from "../components/AccountSettings";
 
 
 const Index = () => <h2>Home</h2>;
@@ -11,7 +12,7 @@ const Index = () => <h2>Home</h2>;
 const MyAccount = () => (
     <div>
         <MyAppBar>
-            <h2>My Account</h2>
+            <AccountSettings />
         </MyAppBar>
     </div>
 );
