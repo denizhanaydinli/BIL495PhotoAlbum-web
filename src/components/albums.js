@@ -73,7 +73,7 @@ const cards = [1, 2, 3, 4, 5];
 const Album = (props) => {
     const { classes } = props;
 
-    const onViewClick = (index) => { console.log("sadasdsa"); props.history.push(`/album/${index + 1}`) };
+    const onViewClick = (index) => {props.history.push(`/album/${index + 1}`) };
 
     return (
         <div className={classes.root}>
