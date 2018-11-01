@@ -7,6 +7,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
+import { Grid, Paper } from '@material-ui/core';
+import _ from 'lodash';
 
 const styles = theme => ({
     button: {
@@ -46,7 +48,7 @@ class AccountSettings extends Component {
             <form autoComplete="off">
                 <Button className={classes.button} onClick={this.handleOpen}>
                     Select Hour for deleting photos automatically
-            </Button>
+                </Button>
                 <FormControl className={classes.formControl}>
                     <InputLabel htmlFor="demo-controlled-open-select">Hour</InputLabel>
                     <Select
@@ -63,10 +65,13 @@ class AccountSettings extends Component {
                         <MenuItem value="">
                             <em>None</em>
                         </MenuItem>
-                        <MenuItem value={10}>10</MenuItem>
-                        <MenuItem value={20}>20</MenuItem>
-                        <MenuItem value={30}>30</MenuItem>
+                        {
+                            _.range(1,24).map(hour => <MenuItem value={hour}>{hour}</MenuItem>)
+                        }
                     </Select>
+                    <Button color="primary" className={classes.button}>
+                        Save
+                    </Button>
                 </FormControl>
             </form>
         );
