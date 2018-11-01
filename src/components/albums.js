@@ -17,6 +17,7 @@ import { generatePhotos } from '../data/image_generator';
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
+import { withRouter } from 'react-router-dom'
 
 
 const styles = theme => ({
@@ -72,19 +73,19 @@ const cards = [1, 2, 3, 4, 5];
 const Album = (props) => {
     const { classes } = props;
 
+    const onViewClick = (index) => { console.log("sadasdsa"); props.history.push(`/album/${index + 1}`) };
+
     return (
-        <div>
+        <div className={classes.root}>
             <CssBaseline />
             <main>
                 <div className={classes.heroUnit}>
                     <div className={classes.heroContent}>
                         <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-                            Album layout
+                            Albums layout
                         </Typography>
                         <Typography variant="h6" align="center" color="textSecondary" paragraph>
-                            Something short and leading about the collection below—its contents, the creator, etc.
-                            Make it short and sweet, but not too short so folks don&apos;t simply skip over it
-                            entirely.
+                            Something short and leading about the collection below—its contents
                         </Typography>
                         <div className={classes.heroButtons}>
                             <Grid container spacing={16} justify="center">
@@ -93,17 +94,11 @@ const Album = (props) => {
                                         Create New Album
                                   </Button>
                                 </Grid>
-                                {/* <Grid item>
-                                    <Button variant="outlined" color="primary">
-                                        Secondary action
-                                    </Button>
-                                </Grid> */}
                             </Grid>
                         </div>
                     </div>
                 </div>
                 <div className={classNames(classes.layout, classes.cardGrid)}>
-                    {/* End hero unit */}
                     <Grid container spacing={40}>
                         {cards.map((card, index) => (
                             <Grid item key={card} sm={6} md={4} lg={3}>
@@ -124,7 +119,8 @@ const Album = (props) => {
                                         </Typography>
                                     </CardContent>
                                     <CardActions>
-                                        <Button size="small" color="primary">
+                                        {/* <Button size="small" color="primary" onClick={() => { console.log("sadasdsa"); return <Redirect to="/album/2" />} } > */}
+                                        <Button size="small" color="primary" onClick={() => onViewClick(index)} >
                                             View
                                         </Button>
                                         <IconButton aria-label="Add to favorites">
@@ -140,7 +136,6 @@ const Album = (props) => {
                     </Grid>
                 </div>
             </main>
-            {/* Footer */}
             <footer className={classes.footer}>
                 <Typography variant="h6" align="center" gutterBottom>
                     Footer
@@ -149,7 +144,6 @@ const Album = (props) => {
                     Something here to give the footer a purpose!
                 </Typography>
             </footer>
-            {/* End footer */}
         </div>
     );
 }
