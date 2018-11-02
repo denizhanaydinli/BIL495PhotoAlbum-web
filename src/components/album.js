@@ -54,13 +54,24 @@ const styles = theme => ({
 
 class TitlebarGridList extends Component {
 
+    state = {
+        tileData
+    }
+
+    removePhoto = (id) => {
+        let filteredTileData = this.state.tileData.filter(tile => tile.id !== id )
+        this.setState({
+            tileData: filteredTileData
+        })
+    }
+
     render() {
         const { classes } = this.props;
         return (
             <div className={classes.root}>
                 {
-                    tileData.map((tile, index) => (
-                        <ImgMediaCard key={index} img={tile.img} />
+                    this.state.tileData.map((tile, index) => (
+                        <ImgMediaCard key={tile.id} removePhoto={this.removePhoto} {...tile} />
                     ))
                 }
             </div>

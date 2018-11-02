@@ -17,6 +17,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { ListItem, ListItemText, List, Tooltip } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
 import _ from 'lodash';
 import SimpleDialogDemo from './KeywordDialog';
@@ -75,6 +76,11 @@ class RecipeReviewCard extends React.Component {
         this.setState(state => ({ keywords }))
     }
 
+    handleDelete = () => {
+        this.props.removePhoto(this.props.id);
+        console.log("deleted");
+    }
+
     render() {
         const { classes } = this.props;
 
@@ -88,7 +94,7 @@ class RecipeReviewCard extends React.Component {
                     }
                     action={
                         <IconButton>
-                            <DeleteIcon />
+                            <DeleteIcon onClick={this.handleDelete} />
                         </IconButton>
                     }
                     title="Shrimp and Chorizo Paella"
@@ -133,6 +139,11 @@ class RecipeReviewCard extends React.Component {
                                 this.state.keywords.map((keyword, index) => (
                                     <ListItem key={index}>
                                         <ListItemText primary={keyword} />
+                                        <Tooltip title="Edit">
+                                            <IconButton aria-label="Edit">
+                                                <EditIcon />
+                                            </IconButton>
+                                        </Tooltip>
                                         <Tooltip title="Delete">
                                             <IconButton aria-label="Delete">
                                                 <DeleteIcon />
