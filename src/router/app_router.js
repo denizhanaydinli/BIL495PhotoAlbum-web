@@ -44,6 +44,11 @@ export const AppRouter = () => (
             <Route path="/album/3" exact component={AlbumPhotos} />
             <Route path="/album/4" exact component={AlbumPhotos} />
             <Route path="/album/5" exact component={AlbumPhotos} />
+            <Route path="/album/6" exact component={AlbumPhotos} />
+            <Route path="/album/7" exact component={AlbumPhotos} />
+            <Route path="/album/8" exact component={AlbumPhotos} />
+            <Route path="/album/9" exact component={AlbumPhotos} />
+            <Route path="/album/10" exact component={AlbumPhotos} />
             <Route path="/albums/" exact component={AlbumCollection} />
         </div>
     </Router>
