@@ -20,7 +20,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
 import _ from 'lodash';
-import SimpleDialogDemo from './KeywordDialog';
+import SimpleDialogDemo, { SimpleDialogWrapped } from './KeywordDialog';
 
 const styles = theme => ({
     card: {
@@ -62,7 +62,9 @@ class RecipeReviewCard extends React.Component {
                 "keyword 1",
                 "keyword 2",
                 "keyword 3",
-            ]
+            ],
+            updateKeyword: false,
+            keywordIndex: -1
         };
     }
 
@@ -76,9 +78,31 @@ class RecipeReviewCard extends React.Component {
         this.setState(state => ({ keywords }))
     }
 
+    deleteKeyword = (index) => {
+        let { keywords } = this.state;
+
+        keywords = keywords.filter((keyword, k_index) => k_index !== index)
+
+        this.setState({ keywords });
+    }
+
     handleDelete = () => {
         this.props.removePhoto(this.props.id);
         console.log("deleted");
+    }
+
+    updateKeyword = (index = -1) => {
+        this.setState({ updateKeyword: true, keywordIndex: index })
+    }
+
+    cancelUpdatingKeyword = () => {
+        this.setState({ updateKeyword: false, keywordIndex: -1 })
+    }
+
+    onUpdateKeyword = (value) => {
+        let keywords = this.state.keywords.map((keyword, index) => index === this.state.keywordIndex ? value : keyword);
+        this.setState({ keywords });
+        this.cancelUpdatingKeyword();
     }
 
     render() {
@@ -133,7 +157,16 @@ class RecipeReviewCard extends React.Component {
                 <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
                     <CardContent>
                         <SimpleDialogDemo addNewKeyword={this.addNewKeyWord} />
-
+                        {
+                            this.state.updateKeyword &&
+                            <SimpleDialogWrapped
+                                open={this.state.updateKeyword}
+                                selectedValue={this.state.keywords[this.state.keywordIndex]}
+                                cancelAddingKeyword={this.cancelUpdatingKeyword}
+                                updateButton={"Update"}
+                                onClose={this.onUpdateKeyword}
+                            />
+                        }
                         <List component="nav">
                             {
                                 this.state.keywords.map((keyword, index) => (
@@ -141,12 +174,12 @@ class RecipeReviewCard extends React.Component {
                                         <ListItemText primary={keyword} />
                                         <Tooltip title="Edit">
                                             <IconButton aria-label="Edit">
-                                                <EditIcon />
+                                                <EditIcon onClick={() => this.updateKeyword(index)} />
                                             </IconButton>
                                         </Tooltip>
                                         <Tooltip title="Delete">
                                             <IconButton aria-label="Delete">
-                                                <DeleteIcon />
+                                                <DeleteIcon onClick={() => this.deleteKeyword(index)} />
                                             </IconButton>
                                         </Tooltip>
                                     </ListItem>
