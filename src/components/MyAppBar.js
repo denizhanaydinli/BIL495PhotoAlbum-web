@@ -16,6 +16,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import { Link } from "react-router-dom";
 
 import Album from "./albums";
 
@@ -127,7 +128,7 @@ class PrimarySearchAppBar extends React.Component {
                 onClose={this.handleMenuClose}
             >
                 <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
-                <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
+                <MenuItem onClick={() => {this.handleMenuClose() } }> <Link to="/my_account">My Account</Link></MenuItem>
             </Menu>
         );
 
@@ -172,7 +173,7 @@ class PrimarySearchAppBar extends React.Component {
                             <MenuIcon />
                         </IconButton>
                         <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-                            Photos
+                            <Link to="/albums" >Photos</Link>
                         </Typography>
                         <div className={classes.search}>
                             <div className={classes.searchIcon}>
@@ -188,11 +189,6 @@ class PrimarySearchAppBar extends React.Component {
                         </div>
                         <div className={classes.grow} />
                         <div className={classes.sectionDesktop}>
-                            {/* <IconButton color="inherit">
-                                <Badge badgeContent={4} color="secondary">
-                                    <MailIcon />
-                                </Badge>
-                            </IconButton> */}
                             <IconButton color="inherit">
                                 <Badge badgeContent={17} color="secondary">
                                     <NotificationsIcon />
