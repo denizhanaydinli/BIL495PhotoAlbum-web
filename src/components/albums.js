@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import AppBar from '@material-ui/core/AppBar';
@@ -17,7 +17,6 @@ import { generatePhotos } from '../data/image_generator';
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
-import { withRouter } from 'react-router-dom'
 
 
 const styles = theme => ({
@@ -68,84 +67,97 @@ const styles = theme => ({
     },
 });
 
-const cards = [1, 2, 3, 4, 5];
 
-const Album = (props) => {
-    const { classes } = props;
+class Album extends Component {
 
-    const onViewClick = (index) => {props.history.push(`/album/${index + 1}`) };
+    state = {
+        cards: [1, 2, 3, 4, 5]
+    }
 
-    return (
-        <div className={classes.root}>
-            <CssBaseline />
-            <main>
-                <div className={classes.heroUnit}>
-                    <div className={classes.heroContent}>
-                        <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-                            Albums layout
+    onViewClick = (index) => { this.props.history.push(`/album/${index + 1}`) };
+
+    addNewAlbum = () => {
+        if (this.state.cards.length < 10) {
+            let { cards } = this.state;
+            cards.push(this.state.cards.length + 1);
+            this.setState({ cards })
+        }
+    }
+
+    render() {
+        const { classes } = this.props;
+        return (
+            <div className={classes.root}>
+                <CssBaseline />
+                <main>
+                    <div className={classes.heroUnit}>
+                        <div className={classes.heroContent}>
+                            <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
+                                Albums layout
                         </Typography>
-                        <Typography variant="h6" align="center" color="textSecondary" paragraph>
-                            Something short and leading about the collection below—its contents
+                            <Typography variant="h6" align="center" color="textSecondary" paragraph>
+                                Something short and leading about the collection below—its contents
                         </Typography>
-                        <div className={classes.heroButtons}>
-                            <Grid container spacing={16} justify="center">
-                                <Grid item>
-                                    <Button variant="contained" color="primary">
-                                        Create New Album
-                                  </Button>
+                            <div className={classes.heroButtons}>
+                                <Grid container spacing={16} justify="center">
+                                    <Grid item>
+                                        <Button variant="contained" color="primary"
+                                            onClick={this.addNewAlbum}
+                                        >
+                                            Create New Album
+                                      </Button>
+                                    </Grid>
                                 </Grid>
-                            </Grid>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className={classNames(classes.layout, classes.cardGrid)}>
-                    <Grid container spacing={40}>
-                        {cards.map((card, index) => (
-                            <Grid item key={card} sm={6} md={4} lg={3}>
-                                <Card className={classes.card}>
-                                    <CardMedia
-                                        className={classes.cardMedia}
-                                        // image="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22288%22%20height%3D%22225%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20288%20225%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_164edaf95ee%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_164edaf95ee%22%3E%3Crect%20width%3D%22288%22%20height%3D%22225%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2296.32500076293945%22%20y%3D%22118.8%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" // eslint-disable-line max-len
-                                        image={generatePhotos()[index].fileUrl}
-                                        // image={"https://loremflickr.com/cache/resized/1824_28962109108_ee8dbb4dc1_z_320_340_nofilter.jpg"}
-                                        title="Image title"
-                                    />
-                                    <CardContent className={classes.cardContent}>
-                                        <Typography gutterBottom variant="h5" component="h2">
-                                            Heading
+                    <div className={classNames(classes.layout, classes.cardGrid)}>
+                        <Grid container spacing={40}>
+                            {this.state.cards.map((card, index) => (
+                                <Grid item key={card} sm={6} md={4} lg={3}>
+                                    <Card className={classes.card}>
+                                        <CardMedia
+                                            className={classes.cardMedia}
+                                            image={generatePhotos()[index].fileUrl}
+                                            title="Image title"
+                                        />
+                                        <CardContent className={classes.cardContent}>
+                                            <Typography gutterBottom variant="h5" component="h2">
+                                                Heading
                                         </Typography>
-                                        <Typography>
-                                            This is a media card. You can use this section to describe the content.
+                                            <Typography>
+                                                This is a media card. You can use this section to describe the content.
                                         </Typography>
-                                    </CardContent>
-                                    <CardActions>
-                                        {/* <Button size="small" color="primary" onClick={() => { console.log("sadasdsa"); return <Redirect to="/album/2" />} } > */}
-                                        <Button size="small" color="primary" onClick={() => onViewClick(index)} >
-                                            View
+                                        </CardContent>
+                                        <CardActions>
+                                            <Button size="small" color="primary" onClick={() => this.onViewClick(index)} >
+                                                View
                                         </Button>
-                                        <IconButton aria-label="Add to favorites">
+                                            {/* <IconButton aria-label="Add to favorites">
                                             <FavoriteIcon />
                                         </IconButton>
                                         <IconButton aria-label="Share">
                                             <ShareIcon />
-                                        </IconButton>
-                                    </CardActions>
-                                </Card>
-                            </Grid>
-                        ))}
-                    </Grid>
-                </div>
-            </main>
-            <footer className={classes.footer}>
-                <Typography variant="h6" align="center" gutterBottom>
-                    Footer
+                                        </IconButton> */}
+                                        </CardActions>
+                                    </Card>
+                                </Grid>
+                            ))}
+                        </Grid>
+                    </div>
+                </main>
+                <footer className={classes.footer}>
+                    <Typography variant="h6" align="center" gutterBottom>
+                        Footer
                 </Typography>
-                <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-                    Something here to give the footer a purpose!
+                    <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
+                        Something here to give the footer a purpose!
                 </Typography>
-            </footer>
-        </div>
-    );
+                </footer>
+            </div>
+        );
+    }
+
 }
 
 Album.propTypes = {
