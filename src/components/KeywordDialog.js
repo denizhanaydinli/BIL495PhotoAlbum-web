@@ -2,19 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Avatar from '@material-ui/core/Avatar';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import ListItemText from '@material-ui/core/ListItemText';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import PersonIcon from '@material-ui/icons/Person';
 import AddIcon from '@material-ui/icons/Add';
-import Typography from '@material-ui/core/Typography';
 import blue from '@material-ui/core/colors/blue';
 import { Tooltip, TextField } from '@material-ui/core';
 
@@ -30,9 +23,19 @@ class SimpleDialog extends React.Component {
         name: ''
     }
 
-    handleClose = () => {
-        debugger;
-        this.props.onClose(this.state.name);
+    addKeyword = () => {
+        let name = this.state.name;
+        this.props.onClose(name);
+        this.setState({
+            name: '',
+        });
+    };
+
+    cancelAddingKeyword = () => {
+        this.props.cancelAddingKeyword();
+        this.setState({
+            name: '',
+        });
     };
 
     handleListItemClick = value => {
@@ -45,19 +48,27 @@ class SimpleDialog extends React.Component {
         });
     };
 
+    componentDidMount = () => {
+        if (this.props.selectedValue) {
+            this.setState({
+                name: this.props.selectedValue,
+            });
+        }
+    }
+
     render() {
         const { classes, onClose, selectedValue, open, ...other } = this.props;
 
         return (
             <Dialog
                 open={open}
-                onClose={this.handleClose}
+                onClose={this.cancelAddingKeyword}
                 aria-labelledby="form-dialog-title"
             >
                 <DialogTitle id="form-dialog-title">Add New Keyword</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Add New Keyword To Search Photo                        
+                        Add New Keyword To Search Photo
                     </DialogContentText>
                     <TextField
                         autoFocus
@@ -71,12 +82,12 @@ class SimpleDialog extends React.Component {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={this.handleClose} color="primary">
+                    <Button onClick={this.cancelAddingKeyword} color="primary">
                         Cancel
-              </Button>
-                    <Button onClick={this.handleClose} color="primary">
-                        Add
-              </Button>
+                    </Button>
+                    <Button onClick={() => this.state.name ? this.addKeyword() : this.cancelAddingKeyword()} color="primary">
+                        {this.props.updateButton ? this.props.updateButton : "Add"}
+                    </Button>
                 </DialogActions>
             </Dialog>
         );
@@ -90,6 +101,7 @@ SimpleDialog.propTypes = {
 };
 
 const SimpleDialogWrapped = withStyles(styles)(SimpleDialog);
+export { SimpleDialogWrapped };
 
 class SimpleDialogDemo extends React.Component {
     state = {
@@ -106,7 +118,10 @@ class SimpleDialogDemo extends React.Component {
     handleClose = value => {
         this.props.addNewKeyword(value);
         this.setState({ selectedValue: value, open: false });
-        
+    };
+
+    cancelAddingKeyword = value => {
+        this.setState({ selectedValue: '', open: false });
     };
 
     render() {
@@ -124,6 +139,7 @@ class SimpleDialogDemo extends React.Component {
                     selectedValue={this.state.selectedValue}
                     open={this.state.open}
                     onClose={this.handleClose}
+                    cancelAddingKeyword={this.cancelAddingKeyword}
                 />
             </div>
         );
