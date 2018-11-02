@@ -76,7 +76,7 @@ class SimpleDialog extends React.Component {
               </Button>
                     <Button onClick={this.handleClose} color="primary">
                         Add
-              </Button>
+                    </Button>
                 </DialogActions>
             </Dialog>
         );
