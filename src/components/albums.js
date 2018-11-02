@@ -94,10 +94,10 @@ class Album extends Component {
                         <div className={classes.heroContent}>
                             <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
                                 Albums layout
-                        </Typography>
+                            </Typography>
                             <Typography variant="h6" align="center" color="textSecondary" paragraph>
                                 Something short and leading about the collection below—its contents
-                        </Typography>
+                            </Typography>
                             <div className={classes.heroButtons}>
                                 <Grid container spacing={16} justify="center">
                                     <Grid item>
